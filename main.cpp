@@ -33,7 +33,10 @@ int main()
         sensor.sen_gyro(&gx,&gy,&gz);
         sensor.sen_mag(&mx,&my,&mz);
         //SDにデータを保存
-        fprintf(fp,"%f,%f,%f,%f,%f,%f\r\n",sattime.read(),batvol,mx,my,mz,temp);
+        fprintf(fp,"%f,%f,%f,",sattime.read(),batvol,temp);
+        fprintf(fp,"%f,%f,%f,",ax,ay,az);
+        fprintf(fp,"%f,%f,%f,",gx,gy,gz);
+        fprintf(fp,"%f,%f,%f\r\n",mx,my,mz);
         //地上局にデータを送信
         com.printf("time %f,batvol %f,temp %f\r\n",sattime.read(),batvol,temp);
         com.printf("accel %f,%f,%f\r\n",ax,ay,az);
@@ -56,7 +59,10 @@ int main()
                     sensor.sen_gyro(&gx,&gy,&gz);
                     sensor.sen_mag(&mx,&my,&mz);
                     //SDにデータを保存
-                    fprintf(fp,"%f,%f,%f,%f,%f,%f\r\n",sattime.read(),batvol,mx,my,mz,temp);
+                    fprintf(fp,"%f,%f,%f",sattime.read(),batvol,temp);
+                    fprintf(fp,"%f,%f,%f",ax,ay,az);
+                    fprintf(fp,"%f,%f,%f",gx,gy,gz);
+                    fprintf(fp,"%f,%f,%f\r\n",mx,my,mz);
                     //地上局にデータを送信
                     com.printf("time %f,batvol %f,temp %f\r\n",sattime.read(),batvol,temp);
                     com.printf("accel %f,%f,%f\r\n",ax,ay,az);
