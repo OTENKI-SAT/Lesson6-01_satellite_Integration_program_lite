@@ -38,10 +38,7 @@ int main()
         fprintf(fp,"%f,%f,%f,",gx,gy,gz);
         fprintf(fp,"%f,%f,%f\r\n",mx,my,mz);
         //地上局にデータを送信
-        com.printf("time %f,batvol %f,temp %f\r\n",sattime.read(),batvol,temp);
-        com.printf("accel %f,%f,%f\r\n",ax,ay,az);
-        com.printf("gyro %f,%f,%f\r\n",gx,gy,gz);
-        com.printf("magnet %f,%f,%f\r\n",mx,my,mz);
+        com.printf("%f%f%f%f%f%f%f%f%f%f%f%f",sattime.read(),batvol,temp,ax,ay,az,gx,gy,gz,mx,my,mz);
         //1秒待機（1秒間隔でデータを取得する）
         wait(1);
         
@@ -64,14 +61,10 @@ int main()
                     fprintf(fp,"%f,%f,%f",gx,gy,gz);
                     fprintf(fp,"%f,%f,%f\r\n",mx,my,mz);
                     //地上局にデータを送信
-                    com.printf("time %f,batvol %f,temp %f\r\n",sattime.read(),batvol,temp);
-                    com.printf("accel %f,%f,%f\r\n",ax,ay,az);
-                    com.printf("gyro %f,%f,%f\r\n",gx,gy,gz);
-                    com.printf("magnet %f,%f,%f\r\n",mx,my,mz);
+                    com.printf("%f%f%f%f%f%f%f%f%f%f%f%f",sattime.read(),batvol,temp,ax,ay,az,gx,gy,gz,mx,my,mz);
                 }
             }
             com.initialize();
         }
     }
 }
-
