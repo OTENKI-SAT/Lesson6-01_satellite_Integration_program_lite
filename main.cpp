@@ -23,25 +23,23 @@ int main()
     int rcmd=0,cmdflag=0;  //command variable
     sattime.start();
     eps.turn_on_regulator();//turn on 3.3V conveter
-   
-    for(int i=0;i<50;i++){
+    cdh.turn_on_analogSW();//turn on transceiver
+    com.printf("Hello\r\n");
+    while(1){
         com.xbee_receive(&rcmd,&cmdflag);
-        
+        wait(1);
         //senssing HK data
         eps.vol(&batvol);
         sensor.temp_sense(&temp);
         
         //Transmitting HK data to Ground Station(GS)
-        com.printf("Hello\r\n");
-        
-         
         if(cmdflag == 1){
             if(rcmd == 'a'){
-                sat.printf("rcmd=%c,cmdflag=%d\r\n",rcmd,cmdflag);
-                eps.vol(&batvol);
-                sensor.temp_sense(&temp);
+                sat.printf("rcmd=%c,cmdflag=%d\r\n",rcmd,cmdflag);   
                 com.printf("Hepta-Sat Lite Uplink Ok\r\n");
                 for(int j=0;j<5;j++){
+                    eps.vol(&batvol);
+                    sensor.temp_sense(&temp);
                     com.printf("Time = %f [s], batvol = %2f [V], temp = %2f [deg C]\r\n",sattime.read(),batvol,temp);
                     wait_ms(1000);
                 }
@@ -57,7 +55,7 @@ int main()
                 for(int i = 0; i < 10; i++) {
                     eps.vol(&batvol);
                     fprintf(fp,"%f\r\n",batvol);
-                    wait_ms(1000);
+                    wait_ms(500);
                 }
                 fclose(fp);
                 fp = fopen("/sd/mydir/satdata.txt","r");
@@ -77,11 +75,12 @@ int main()
                     com.printf("ax:%f,ay:%f,az:%f\r\n",ax,ay,az);
                     com.printf("gx:%f,gy:%f,gz:%f\r\n",gx,gy,gz);
                     com.printf("mx:%f,my:%f,mz:%f\r\n",mx,my,mz);
-                    wait_ms(1000); 
+                    wait_ms(500); 
                 }
             }
-            com.initialize(); //initializing
+             com.initialize(); //initializing
         }
+       
     }
     sattime.stop();
     sat.printf("From Sat : End of operation\r\n");
